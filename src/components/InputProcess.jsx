@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './InputProcess.css';
+import Run from './Run';
 
 function InputProcess(){
 
     const [procesoX, setProcesoX] = useState(1);
     const [formData, setFormData] = useState([]);
+    const [showRun, setShowRun] = useState(false);
 
     const handleSubmit = (e) => { // every time submit button is clicked it excecutes the following
         e.preventDefault(); // prevents the default behaviour of submit button
@@ -33,6 +35,11 @@ function InputProcess(){
         // saves each object into formData array. 
         setFormData((prevData) => [...prevData, newFormData]);
 
+        // show Run button if there are 2 or more process
+        if(formData.length >= 1){
+            setShowRun(true);
+        }
+
         // cleans every field value
         document.getElementById('arrival').value = '';
         document.getElementById('require').value = '';
@@ -44,11 +51,11 @@ function InputProcess(){
             {/*When submit button is clicked it excecutes handleSubmit function*/}
             <form onSubmit={handleSubmit} className="input-process-form">
                 <h3>Proceso {procesoX}</h3>
-                <label htmlFor="">Instante de llegada: </label>
+                <label htmlFor="arrival">Instante de llegada: </label>
                 <input type="number" id="arrival" />
-                <label htmlFor="">Memoria requerida: </label>
+                <label htmlFor="require">Memoria requerida: </label>
                 <input type="number" min="100" id="require" />
-                <label htmlFor="">Tiempo de ejecucion: </label>
+                <label htmlFor="exectime">Tiempo de ejecucion: </label>
                 <input type="number" id="exectime"/>
                 <input type="submit" value="Agregar"/>
             </form>
@@ -77,6 +84,10 @@ function InputProcess(){
                         </tbody>
                 </table>
             </div>
+            )}
+
+            {showRun && (
+                <Run/>
             )}
         </div>
     );

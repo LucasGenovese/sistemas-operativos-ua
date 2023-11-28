@@ -1,5 +1,3 @@
-
-
 function Graphic(){
     return(
         <div>
