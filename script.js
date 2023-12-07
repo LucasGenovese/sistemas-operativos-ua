@@ -12,12 +12,18 @@ const P2 = {
 }
 const P3 = {
     process: "P3",
+    arrival: 1,
+    require: 600,
+    exectime: 1
+}
+const P4 = {
+    process: "P4",
     arrival: 2,
     require: 100,
     exectime: 1
 }
   
-const processArray = [P1, P2, P3];
+const processArray = [P1, P2, P3, P4];
 let timeInstance = [];
 var memorySize = 2000;
 var maxTime = 0;
@@ -28,13 +34,25 @@ class MemoryManagement { // class for memory
         this.memory = new Array(memorySize).fill(null);
     }
 
-    execProcess(process, require){
+    execProcess(process, require) { // checks if tere is any null range emtpy and if it fits the process
         let allocatedCount = 0;
-
-        for (let i=0; i<this.memorySize && allocatedCount < require; i++){ // loops memory array while allocating the process
-            if(this.memory[i]===null){ // empty positions are represented as null. So if there is a null position then the process can be placed
-                this.memory[i] = process;
-                allocatedCount++;
+        let currentNullRange = 0;
+    
+        for (let i = 0; i < this.memorySize; i++) {
+            if (this.memory[i] === null) {
+                currentNullRange++;
+            } else {
+                currentNullRange = 0; // Reset the null range counter
+            }
+    
+            if (currentNullRange >= require) {
+                // Found a null range big enough to fit 'require'
+                for (let j = i - currentNullRange + 1; j <= i; j++) {
+                    this.memory[j] = process;
+                    allocatedCount++;
+                }
+    
+                break; // Stop searching once a suitable range is found
             }
         }
     }
@@ -86,21 +104,12 @@ for (let n = 0; n <= maxTime; n++) { // for each time instance checks which proc
         if (process.arrival === n) {
             memoryManagement.execProcess(process.process, process.require); //allocates process
 
-            if(!nextProcess || nextProcess.arrival !== process.arrival){ // only push if next arrival is different from current or if nextProcess is undefined
-                const getposition = memoryManagement.getPositions();
-                timeInstance.push(getposition);
-            }
-
         } else if (process.arrival + process.exectime === n) { // finishing process
             memoryManagement.removeProcess(process.process);
-            
-            if(!nextProcess || (nextProcess.arrival + nextProcess.exectime) !== (process.arrival+ process.exectime)){ // only pushes when all process of a given time have finished
-                const getposition = memoryManagement.getPositions();
-                timeInstance.push(getposition);
-            }
-            
         }
     }
+    const getposition = memoryManagement.getPositions();
+    timeInstance.push(getposition);
 }
 
 console.log(timeInstance);
