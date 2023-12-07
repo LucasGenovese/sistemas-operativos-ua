@@ -99,7 +99,6 @@ processArray.forEach((process) => { // Gets the max time a process will be execu
 for (let n = 0; n <= maxTime; n++) { // for each time instance checks which process needs execution
     for (let i = 0; i < processArray.length; i++) { // loops through processArray
         const process = processArray[i];
-        const nextProcess = processArray[i+1];
     
         if (process.arrival === n) {
             memoryManagement.execProcess(process.process, process.require); //allocates process

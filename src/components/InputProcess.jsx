@@ -12,11 +12,11 @@ function InputProcess(){
         e.preventDefault(); // prevents the default behaviour of submit button
         
         // gets every field value
-        const instantArrival = document.getElementById('arrival').value;
-        const memoriaRequerida = document.getElementById('require').value;
-        const tiempoEjecucion = document.getElementById('exectime').value;
+        const instantArrival = parseInt(document.getElementById('arrival').value);
+        const memoriaRequerida = parseInt(document.getElementById('require').value);
+        const tiempoEjecucion = parseInt(document.getElementById('exectime').value);
 
-        if (!instantArrival || !memoriaRequerida || !tiempoEjecucion) {
+        if (!memoriaRequerida || !tiempoEjecucion) {
             alert('Please fill in all fields');
             return; // Prevent form submission
         }
@@ -26,7 +26,7 @@ function InputProcess(){
 
         // creates an objet to place the data collected from the fields
         const newFormData = {
-            process: procesoX,
+            process: "P" + procesoX,
             arrival: instantArrival,
             require: memoriaRequerida,
             exectime: tiempoEjecucion,
@@ -87,7 +87,7 @@ function InputProcess(){
             )}
 
             {showRun && (
-                <Run/>
+                <Run formData={formData}/>
             )}
         </div>
     );
