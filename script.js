@@ -93,11 +93,12 @@ for (let n = 0; n <= maxTime; n++) { // for each time instance checks which proc
 
         } else if (process.arrival + process.exectime === n) { // finishing process
             memoryManagement.removeProcess(process.process);
-
-            if(!nextProcess || nextProcess.arrival !== process.arrival){
+            
+            if(!nextProcess || (nextProcess.arrival + nextProcess.exectime) !== (process.arrival+ process.exectime)){ // only pushes when all process of a given time have finished
                 const getposition = memoryManagement.getPositions();
                 timeInstance.push(getposition);
             }
+            
         }
     }
 }
