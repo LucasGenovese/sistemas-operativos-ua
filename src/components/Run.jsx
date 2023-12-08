@@ -1,10 +1,13 @@
+import React, { useState } from 'react';
+import './Run.css';
 
 function Run(props) {
     // button function
     const processArray = props.formData;
+    const [timeInstance, setTimeInstance] = useState([]);
 
-    const handleClick = () => { // place script.js here
-        let timeInstance = [];
+    const handleClick = () => { // first fit logic
+        let timeInstanceData = [];
         var memorySize = 2000;
         var maxTime = 0;
 
@@ -87,17 +90,34 @@ function Run(props) {
                 }
             }
             const getposition = memoryManagement.getPositions();
-            timeInstance.push(getposition);
+            timeInstanceData.push(getposition);
         }
-        
-        console.log(timeInstance);
+
+        setTimeInstance(timeInstanceData);
     };
 
     return(
         <div>
             <button onClick={handleClick}>Ejecutar</button>
+            
+            {timeInstance.map((instance, index) => (
+                <div key={index}>
+                <h3>Instancia de tiempo: {index}</h3>
+                <div className="memory-container">
+                    {instance.map((partition, partitionIndex) => (
+                    <div
+                        key={partitionIndex}
+                        className="memory-partition"
+                        style={{ width: `${(partition.size / 2000) * 100}%` }}
+                    >
+                        {partition.state || 'Vacío'} ({partition.size})
+                    </div>
+                    ))}
+                </div>
+                </div>
+            ))}
         </div>
     );
   }
   
-  export default Run
+export default Run

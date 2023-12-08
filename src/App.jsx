@@ -9,9 +9,7 @@ function App() {
     <>
       <Header/>
       <InputProcess/>
-      <Graphic/>
       <Footer/>
-      
     </>
   );
 }

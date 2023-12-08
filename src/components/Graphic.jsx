@@ -1,4 +1,6 @@
-function Graphic(){
+function Graphic(props){
+
+    console.log(props.timeInstance);
     return(
         <div>
             
