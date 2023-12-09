@@ -34,24 +34,30 @@ class MemoryManagement { // class for memory
         this.memory = new Array(memorySize).fill(null);
     }
 
-    execProcess(process, require) { // checks if tere is any null range emtpy and if it fits the process
+    execProcess(process, require) {
         let allocatedCount = 0;
         let currentNullRange = 0;
-    
+        let startSearchIndex = 0;
+
         for (let i = 0; i < this.memorySize; i++) {
-            if (this.memory[i] === null) {
+            // Start the search from the last allocated position
+            const currentIndex = (i + startSearchIndex) % this.memorySize;
+
+            if (this.memory[currentIndex] === null) {
                 currentNullRange++;
             } else {
                 currentNullRange = 0; // Reset the null range counter
             }
-    
+
             if (currentNullRange >= require) {
                 // Found a null range big enough to fit 'require'
-                for (let j = i - currentNullRange + 1; j <= i; j++) {
+                for (let j = currentIndex - currentNullRange + 1; j <= currentIndex; j++) {
                     this.memory[j] = process;
                     allocatedCount++;
                 }
-    
+
+                startSearchIndex = currentIndex + 1; // Set the starting point for the next search
+
                 break; // Stop searching once a suitable range is found
             }
         }
