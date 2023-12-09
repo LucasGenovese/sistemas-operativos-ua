@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import './Run.css';
+import Graphic from './Graphic';
+import './Fit.css';
 
-function Run(props) {
+function FirstFit(props) {
     // button function
     const processArray = props.formData;
     const [timeInstance, setTimeInstance] = useState([]);
@@ -97,27 +98,14 @@ function Run(props) {
     };
 
     return(
-        <div>
-            <button onClick={handleClick}>Ejecutar</button>
+        <div className='container'>
+            <button onClick={handleClick} className='button'>Primer Hueco</button>
             
             {timeInstance.map((instance, index) => (
-                <div key={index}>
-                <h3>Instancia de tiempo: {index}</h3>
-                <div className="memory-container">
-                    {instance.map((partition, partitionIndex) => (
-                    <div
-                        key={partitionIndex}
-                        className="memory-partition"
-                        style={{ width: `${(partition.size / 2000) * 100}%` }}
-                    >
-                        {partition.state || 'Vacío'} ({partition.size})
-                    </div>
-                    ))}
-                </div>
-                </div>
+                <Graphic key={index} instance={instance} index={index} />
             ))}
         </div>
     );
   }
   
-export default Run
+export default FirstFit

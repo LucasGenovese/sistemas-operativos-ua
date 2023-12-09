@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './InputProcess.css';
-import Run from './Run';
+import FirstFit from './FirstFit';
+import SecondFit from './SecondFit';
 
 function InputProcess(){
 
@@ -87,7 +88,11 @@ function InputProcess(){
             )}
 
             {showRun && (
-                <Run formData={formData}/>
+                <div>
+                    <FirstFit formData={formData}/>
+                    <SecondFit formData={formData}/>
+                </div>
+                
             )}
         </div>
     );

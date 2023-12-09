@@ -1,12 +1,13 @@
 .memory-container {
     display: flex;
-    max-width: 100%; /* Set a maximum width if needed */
+    max-width: 100%;
     width: 100%;
-    height: 3em; /* Adjust the height as needed */
+    height: 3em;
     border: 1px solid #000;
   }
   
   .memory-partition {
+    font-size: 0.9rem;
     border: 1px solid #000;
     text-align: center;
     overflow: hidden;
